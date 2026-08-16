@@ -19,9 +19,9 @@ export default function Hero() {
       minH="100vh"
       display="flex"
       flexDirection={{base: "column"}}
-      alignItems="center"
-      paddingTop="100px"
-      px={12}
+      pt={20}
+      px={{base:20, md: 16}}
+      textAlign={{base: "center", md: "left"}}
       bgColor={"black"}
     
     >
@@ -67,7 +67,7 @@ export default function Hero() {
               overflow="hidden"
               bgGradient="linear(to-r, #22C55E, #22C55E)"
               color="white"
-              size={"lg"}
+              size={{base: "md", md: "lg"}}
               fontWeight="bold"
               zIndex={1}
               _before={{
@@ -110,7 +110,7 @@ export default function Hero() {
             </Button>
 
             <Button
-              size="lg"
+              size={{base: "md", md: "lg"}}
               variant="outline"
               color="white"
             >

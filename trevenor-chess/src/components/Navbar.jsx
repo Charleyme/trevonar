@@ -1,322 +1,246 @@
 import {
   Box,
   Flex,
-  Heading,
-  Stack,
-  Button,
-  Image,
-  IconButton,
+  HStack,
   VStack,
+  Text,
+  Button,
+  IconButton,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerHeader,
+  useDisclosure,
+  CloseButton,
 } from "@chakra-ui/react";
-import { FiMenu, FiX } from "react-icons/fi";
 
-import { Link } from "react-router-dom";
+import { FaChessKnight } from "react-icons/fa";
+import { FiMenu } from "react-icons/fi";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-const MotionBox = motion(Box);
+const navLinks = [
+  { name: "Home", href: "#home" },
+  { name: "Features", href: "#features" },
+  { name: "Tournaments", href: "#tournaments" },
+  { name: "Leaderboard", href: "#leaderboard" },
+  { name: "FAQ", href: "#faq" },
+];
 
 export default function Navbar() {
-  const [showFixedNavbar, setShowFixedNavbar] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // show navbar after passing 100vh
-      if (window.scrollY >= window.innerHeight) {
-        setShowFixedNavbar(true);
-      } else {
-        setShowFixedNavbar(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <>
-      {/* ================= INITIAL HERO NAVBAR ================= */}
-      {!showFixedNavbar && (
-        <Box
-          position="absolute"
-          top="0"
-          left="0"
-          w="100%"
-          zIndex="100"
-          p={"25px"}
-          mb={15}
-          bg="0B1120"
-          color="white"
-        >
-          <Flex alignItems="center" justifyContent="space-between">
-            <Flex alignItems="center" gap={3}>
-         
-              
-              <Heading color="#22C55E">♔</Heading>
-              <Heading
-                fontSize={{ base: "20px", md: "30px" }}
-                color={"white"}
-              >
-                TREVONAR
-              </Heading>
-            </Flex>
-
-            <Stack
-              display={{ base: "none", xl: "flex" }}
-              alignItems={"center"}
-              direction="row"
-              spacing="45px"
-              color="grey"
-              fontSize="17px"
-              fontWeight="600"
-            >
-              <Button bg={"none"} color={"white"} to="/">Home</Button>
-              <Button bg={"none"} color={"white"} to="/about">About Us</Button>
-              <Button bg={"none"} color={"white"}  to="/courses">FAQ</Button>
-              
-        
-            </Stack>
-            <Stack>
-              <Button
-              display={{ base: "none", xl: "flex" }}
-              position="relative"
-              overflow="hidden"
-              bgColor="#22C55E"
-              color="white"
-              borderRadius="full"
-              px={10}
-              py={7}
-              textAlign={"center"}
-              fontWeight="bold"
-              zIndex={1}
-              _before={{
-                content: '""',
-
-                position: "absolute",
-
-                left: "0",
-                top: "-100%",
-
-                width: "100%",
-                height: "0%",
-
-                bg: "black",
-
-                borderBottomLeftRadius: "50%",
-                borderBottomRightRadius: "50%",
-
-                transition: "height 0.7s ease-in-out, top 0.7s ease-in-out",
-
-                zIndex: -1,
-              }}
-              sx={{
-                "&:hover::before": {
-                  top: "0%",
-                  height: "180%",
-                },
-
-                "&:not(:hover)::before": {
-                  top: "-100%",
-                  height: "0%",
-                },
-              }}
-              _hover={{
-                transform: "translateY(-2px)",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
-              }}
-              transition="0.3s ease"
-            >
-              Launch Soon
-            </Button>
-            <IconButton
-              display={{base: "flex" , xl:"none"}}
-              icon={isMenuOpen ? <FiX /> : <FiMenu />}
-              aria-label="Toggle Menu"
-              variant="ghost"
-              fontSize="26px"
-              color="white"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            />
-            </Stack>
-
-          </Flex>
-        </Box>
-      )}
-
-      {/* ================= FIXED SCROLL NAVBAR ================= */}
-      <MotionBox
-        initial={{
-          y: -100,
-          opacity: 0,
-        }}
-        animate={{
-          y: showFixedNavbar ? 0 : -100,
-          opacity: showFixedNavbar ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.5,
-          ease: "easeOut",
-        }}
-        position="fixed"
-        top="0"
-        left="0"
-        w="100%"
-        bg="white"
-        boxShadow="lg"
-        p={"30px"}
-        zIndex="1000"
+    <Box
+      position="fixed"
+      top="0"
+      left="0"
+      right="0"
+      zIndex="999"
+      bgColor={"black"}
+      backdropFilter="blur(15px)"
+      
+    >
+      <Flex
+        maxW="1200px"
+        mx="auto"
+        h="76px"
+        px={6}
+        align="center"
+        justify="space-between"
       >
-        <Flex alignItems="center" justifyContent="space-between">
-          <Flex alignItems="center" gap={3}>
-            
-            <Heading fontSize={{ base: "20px", md: "30px" }} color={"#0B1120"}>
-              Trevonar
-            </Heading>
+        {/* LOGO */}
+        <HStack spacing={3}>
+          <Flex
+            w="40px"
+            h="40px"
+            align="center"
+            justify="center"
+            borderRadius="10px"
+            bg="green.500"
+            color="white"
+            boxShadow="0 0 25px rgba(34, 197, 94, 0.35)"
+          >
+            <FaChessKnight size={21} />
           </Flex>
 
-          <Stack
-            direction="row"
-            spacing="50px"
-            color="gray.700"
-            fontSize="17px"
-            fontWeight="600"
-            display={{ base: "none",lg : "flex" }}
+          <Text
+            fontSize={{ base: "18px", md: "21px" }}
+            fontWeight="700"
+            color="white"
           >
-            <Button to="/">Home</Button>
-            <Button to="/about">About </Button>
-            <Button to="/courses">FAQ</Button>
-           
-          </Stack>
+            Trevonar{" "}
+            <Text as="span" color="green.400">
+              Chess
+            </Text>
+          </Text>
+        </HStack>
+
+        {/* DESKTOP NAVIGATION */}
+        <HStack
+          spacing={7}
+          display={{ base: "none", lg: "flex" }}
+        >
+          {navLinks.map((link) => (
+            <Text
+              key={link.name}
+              as="a"
+              href={link.href}
+              color="gray.300"
+              fontSize="14px"
+              fontWeight="500"
+              position="relative"
+              _hover={{
+                color: "green.400",
+              }}
+            >
+              {link.name}
+            </Text>
+          ))}
+        </HStack>
+
+        {/* DESKTOP ACTIONS */}
+        <HStack
+          spacing={3}
+          display={{ base: "none", lg: "flex" }}
+        >
+          <Button
+            variant="ghost"
+            color="gray.300"
+            _hover={{
+              color: "white",
+              bg: "whiteAlpha.100",
+            }}
+          >
+            Login
+          </Button>
 
           <Button
-            display={{ base: "none", md: "flex" }}
-            position="relative"
-            overflow="hidden"
-            bgGradient="linear(to-r, #0047FF, #00A6FF)"
-            color="white"
-            borderRadius="full"
-            px={10}
-            py={7}
-            fontWeight="bold"
-            zIndex={1}
-            _before={{
-              content: '""',
-
-              position: "absolute",
-
-              left: "0",
-              top: "-100%",
-
-              width: "100%",
-              height: "0%",
-
-              bg: "black",
-
-              borderBottomLeftRadius: "50%",
-              borderBottomRightRadius: "50%",
-
-              transition: "height 0.7s ease-in-out, top 0.7s ease-in-out",
-
-              zIndex: -1,
-            }}
-            sx={{
-              "&:hover::before": {
-                top: "0%",
-                height: "180%",
-              },
-
-              "&:not(:hover)::before": {
-                top: "-100%",
-                height: "0%",
-              },
-            }}
+            colorScheme="green"
+            px={5}
             _hover={{
-              transform: "translateY(-2px)",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
+              transform: "translateY(-1px)",
+              boxShadow: "0 0 25px rgba(34, 197, 94, 0.3)",
             }}
-            transition="0.3s ease"
           >
-            Free Training
+            Sign Up
           </Button>
-              <IconButton
-              icon={isMenuOpen ? <FiX /> : <FiMenu />}
-              aria-label="Toggle Menu"
-              variant="ghost"
-              fontSize="26px"
-              color="white"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            />
-        </Flex>
-      </MotionBox>
-      {isMenuOpen && (
-        <MotionBox
-          initial={{
-            opacity: 0,
-            y: -20,
+        </HStack>
+
+        {/* MOBILE MENU BUTTON */}
+        <IconButton
+          display={{ base: "flex", lg: "none" }}
+          onClick={onOpen}
+          aria-label="Open navigation"
+          icon={<FiMenu size={24} />}
+          variant="ghost"
+          color="white"
+          fontSize="24px"
+          _hover={{
+            bg: "whiteAlpha.100",
           }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          exit={{
-            opacity: 0,
-            y: -20,
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-          display={{ xl: "none" }}
-          position="fixed"
-          top={showFixedNavbar ? "100px" : "90px"}
-          left="0"
-          w="100%"
-          bg="white"
-          boxShadow="lg"
-          zIndex="999"
-          p={6}
-          backdropFilter="blur(20px)"
-          borderBottom="1px solid rgba(0,0,0,.08)"
+        />
+      </Flex>
+
+      {/* MOBILE DRAWER */}
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+      >
+        <DrawerOverlay />
+
+        <DrawerContent
+          bg="#080D1C"
+          color="white"
         >
-          <VStack spacing={6} align="stretch" fontWeight="600">
-            <Link to="/" onClick={() => setIsMenuOpen(false)}>
-              Home
-            </Link>
-
-            <Link to="/about" onClick={() => setIsMenuOpen(false)}>
-              About Us
-            </Link>
-
-            <Link to="/courses" onClick={() => setIsMenuOpen(false)}>
-              Our Courses
-            </Link>
-
-            <Link to="/products" onClick={() => setIsMenuOpen(false)}>
-              Our Products
-            </Link>
-
-            <Link to="/gallery" onClick={() => setIsMenuOpen(false)}>
-              Gallery
-            </Link>
-
-            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-              Contact Us
-            </Link>
-
-            <Button
-              bgGradient="linear(to-r,#0047FF,#00A6FF)"
-              color="white"
-              borderRadius="full"
+          <DrawerHeader
+            borderBottom="1px solid"
+            borderColor="whiteAlpha.100"
+          >
+            <Flex
+              align="center"
+              justify="space-between"
             >
-              Free Training
-            </Button>
-          </VStack>
-        </MotionBox>
-      )}
-    </>
+              <HStack spacing={3}>
+                <Flex
+                  w="38px"
+                  h="38px"
+                  align="center"
+                  justify="center"
+                  borderRadius="9px"
+                  bg="green.500"
+                >
+                  <FaChessKnight />
+                </Flex>
+
+                <Text fontWeight="700">
+                  Trevonar{" "}
+                  <Text as="span" color="green.400">
+                    Chess
+                  </Text>
+                </Text>
+              </HStack>
+
+              <CloseButton
+                onClick={onClose}
+                color="white"
+              />
+            </Flex>
+          </DrawerHeader>
+
+          <DrawerBody pt={8}>
+            <VStack
+              align="stretch"
+              spacing={2}
+            >
+              {navLinks.map((link) => (
+                <Text
+                  key={link.name}
+                  as="a"
+                  href={link.href}
+                  onClick={onClose}
+                  px={4}
+                  py={4}
+                  borderRadius="8px"
+                  color="gray.300"
+                  fontSize="16px"
+                  _hover={{
+                    color: "white",
+                    bg: "whiteAlpha.100",
+                  }}
+                >
+                  {link.name}
+                </Text>
+              ))}
+
+              <Box
+                mt={6}
+                pt={6}
+                borderTop="1px solid"
+                borderColor="whiteAlpha.100"
+              >
+                <VStack spacing={3}>
+                  <Button
+                    w="100%"
+                    variant="outline"
+                    color="white"
+                    borderColor="whiteAlpha.300"
+                  >
+                    Login
+                  </Button>
+
+                  <Button
+                    w="100%"
+                    colorScheme="green"
+                  >
+                    Sign Up
+                  </Button>
+                </VStack>
+              </Box>
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Box>
   );
 }
