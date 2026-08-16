@@ -7,7 +7,7 @@ function Home() {
     <>
       <Navbar />
       <Marquee />
-      <Heading color="#22C55E">♔</Heading>
+      <Heading color="#22C55E"></Heading>
     </>
   );
 }
